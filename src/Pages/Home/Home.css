@@ -1,0 +1,10 @@
+.homepage{
+    margin-top: 100px;
+}
+.MuiCardActions-root{
+    border-radius: 10px !important;
+}
+.MuiIconButton-root{
+    border-radius: 10px !important;
+    text-align: center !important;
+}

@@ -1,0 +1,37 @@
+[{
+        "key": 1001,
+        "name": "Search Engine optimization",
+        "cost": 400,
+        "img": "https://i.postimg.cc/3w8PvtKX/seo.png"
+    },
+    {
+        "key": 1002,
+        "name": "Social Media Marketing",
+        "cost": 450,
+        "img": "https://i.postimg.cc/L6fKKqC1/facebook.jpg"
+    },
+    {
+        "key": 1003,
+        "name": "Web UX & UI",
+        "cost": 600,
+        "img": "https://i.postimg.cc/0ydTjTq5/web-ui.jpg"
+    },
+    {
+        "key": 1004,
+        "name": "Creatives",
+        "cost": 350,
+        "img": "https://i.postimg.cc/66FJmV0K/creative.jpg"
+    },
+    {
+        "key": 1005,
+        "name": "Content Marketing",
+        "cost": 400,
+        "img": "https://i.postimg.cc/FH4t998n/content.jpg"
+    },
+    {
+        "key": 1006,
+        "name": "Total Campaign",
+        "cost": 500,
+        "img": "https://i.postimg.cc/2j1NG9nT/campaign.jpg"
+    }
+]
