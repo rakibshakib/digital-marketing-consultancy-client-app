@@ -14,7 +14,7 @@ const Calender = ({ date }) => {
             
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <StaticDatePicker
-                    value={date.toDateString()}
+                    value={date.toLocaleDateString()}
                     shouldDisableDate={isWeekend}
                     onChange={(newValue) => {
                         dispatch(datePicker(newValue))

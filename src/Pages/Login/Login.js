@@ -1,6 +1,11 @@
 import { Button, Container, TextField, Typography } from '@mui/material';
+import { signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
+import { googleLoginUser } from '../../features/Slice/slice';
+import { auth, googleProvider } from '../../Firebase/Firebase.config';
 import './Login.css';
 
 const Login = () => {
@@ -12,7 +17,22 @@ const Login = () => {
         newLoginData[field] = value;
         setLoginData(newLoginData);
     }
-    console.log(loginData);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    const handleLogIn = () => {
+        signInWithPopup(auth, googleProvider).then((result) => {
+            dispatch(googleLoginUser({
+                user: result.user,
+            }))
+            if(result.user){
+                navigate(`/home`)
+            }
+
+        }).catch((error) => {
+            alert("error", error.message)
+        });
+    } 
     return (
         <div className='loginComponents'>
             <NavBar />
@@ -35,11 +55,12 @@ const Login = () => {
                         name="password"
                         onBlur={handleOnChange}
                         variant="standard" />
-                        <br />
+                    <br />
                     <Button type='submit' variant="contained">Login</Button>
                 </form>
                 <br />
-                <Button variant="contained">Login With Google</Button>
+                <Button onClick={() => dispatch(handleLogIn)} variant="contained">Login With Google</Button>
+
             </Container>
         </div>
     )
