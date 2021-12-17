@@ -9,6 +9,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import MyAppoinment from './Pages/MyAppoinment/MyAppoinment';
+import Register from './Pages/Register/Register';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/home' element={<Home />} />
             <Route path='/*' element={<Home />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
             <Route path='/booking/:id' element={<Booking />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/myAppoinment' element={<MyAppoinment />} />

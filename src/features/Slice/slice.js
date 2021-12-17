@@ -16,7 +16,8 @@ export const appoinment = createSlice({
         user: { },
         date: new Date(),
         status: '',
-        isLoading: false 
+        isLoading: false,
+        error: null
     },
     reducers: {
         datePicker: (state, { payload }) => {
@@ -29,9 +30,20 @@ export const appoinment = createSlice({
         logoutUser: state => {
             state.user = {} 
         },
+        createUser: (state, { payload }) => {
+            state.user = payload.user
+            // console.log(state.user)
+        },
+        loginUser: (state, { payload }) => {
+            state.user = payload.user
+            // console.log(state.user)
+        },
         updateUserState: (state, { payload }) => {
             console.log(payload)
             state.user = payload
+        },
+        setError: (state, { payload }) => { 
+            state.error = payload
         }
     },
     extraReducers: (builder) => {
@@ -44,6 +56,6 @@ export const appoinment = createSlice({
         })
     },
 })
-export const { datePicker, googleLoginUser, logoutUser, updateUserState } = appoinment.actions;
+export const { datePicker, googleLoginUser, logoutUser, updateUserState, createUser, setError, loginUser } = appoinment.actions;
 
 export default appoinment.reducer;

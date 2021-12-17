@@ -1,10 +1,10 @@
 import { Button, Container, TextField, Typography } from '@mui/material';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
-import { googleLoginUser } from '../../features/Slice/slice';
+import { googleLoginUser, loginUser, setError } from '../../features/Slice/slice';
 import { auth, googleProvider } from '../../Firebase/Firebase.config';
 import './Login.css';
 
@@ -29,10 +29,28 @@ const Login = () => {
                 navigate(`/home`)
             }
 
-        }).catch((error) => {
-            alert("error", error.message)
+        }).catch((err) => {
+            dispatch(setError({
+                error: err.message
+            })) 
         });
     } 
+    const handleUserLogin = e => {
+        e.preventDefault()
+        signInWithEmailAndPassword(auth, loginData.email, loginData.password).then((result) => {
+            dispatch(loginUser({
+                user: result.user,
+            }))
+            if(result.user){
+                navigate(`/home`)
+            }
+        })
+        .catch((err) => {
+            dispatch(setError({
+                error: err.message
+            })) 
+        })
+    }
     return (
         <div className='loginComponents'>
             <NavBar />
@@ -40,7 +58,7 @@ const Login = () => {
                 <Typography variant="h6" component="div" sx={{ textAlign: 'center', color: "black" }}>
                     Login
                 </Typography>
-                <form className='form-container'>
+                <form className='form-container' onSubmit={handleUserLogin}>
                     <TextField
                         sx={{ width: '75%', m: 1 }}
 
@@ -50,7 +68,7 @@ const Login = () => {
                         variant="standard" />
                     <TextField
                         sx={{ width: '75%', m: 1 }}
-
+                        type='password'
                         label="Your Password"
                         name="password"
                         onBlur={handleOnChange}
@@ -60,7 +78,9 @@ const Login = () => {
                 </form>
                 <br />
                 <Button onClick={() => dispatch(handleLogIn)} variant="contained">Login With Google</Button>
-
+                <Typography variant="h6" component="div" sx={{ textAlign: 'center', color: "black" }}>  
+                New User ? <Link to='/register'>Register Here</Link>
+                </Typography>
             </Container>
         </div>
     )
