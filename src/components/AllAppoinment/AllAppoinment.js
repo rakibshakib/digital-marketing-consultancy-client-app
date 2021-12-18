@@ -8,7 +8,7 @@ const AllAppoinment = () => {
         const url = "https://whispering-hamlet-97781.herokuapp.com/all-appoinments"
         fetch(url).then(res=> res.json()).then(data=> setAllApoinments(data))
     }, [])
-    console.log(allApoinments);
+
     return (
         <div>
             <h2>We Have Total: {allApoinments.length} Appoinment</h2>

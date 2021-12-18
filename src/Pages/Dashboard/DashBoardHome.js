@@ -32,11 +32,11 @@ const DashBoardHome = () => {
     return (
         <div>
             <Box >
-                <Grid container spacing={2}>
-                    <Grid item xs={12} md={4}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12} sm={12} md={5}>
                         <Calender date={date} />
                     </Grid>
-                    <Grid item xs={12} md={8}>
+                    <Grid item xs={12} sm={12} md={7}>
                         <AppoinmnetDataTable dateAppoinmnet={dateAppoinmnet} handleDeleteAppoinment={handleDeleteAppoinment} />
                     </Grid>
                 </Grid>

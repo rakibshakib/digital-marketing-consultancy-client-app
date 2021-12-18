@@ -1,6 +1,4 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import HomeIcon from '@mui/icons-material/Home';
-import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
@@ -28,7 +26,7 @@ const drawerWidth = 250;
 function Dashboard(props) {
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    
+
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -98,11 +96,11 @@ function Dashboard(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="p" noWrap component="button" sx={{ ml: 2, fontWeight: 500 }}>
-                        <Link to='/'> <HomeIcon />  Home Page </Link>
+                    <Typography variant="p" noWrap component="button" sx={{ ml: 2, fontWeight: 500, color: 'black',  fontSize: 20, textDecoration: 'none' }}>
+                        <Link to='/'>Home</Link>
                     </Typography>
-                    <Typography variant="p" noWrap component="button" sx={{ ml: 3, fontWeight: 500, color: 'yellow' }} onClick={logoutHandler}>
-                        <LogoutIcon /> Logout
+                    <Typography variant="p" noWrap component="button" sx={{ ml: 3, fontWeight: 500, color: 'black', fontSize: 20 }} onClick={logoutHandler}>
+                        Logout
                     </Typography>
                 </Toolbar>
             </AppBar>

@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -73,65 +73,61 @@ const Booking = () => {
                             Please Select a date from the calender, when you want to take consultancy
                         </Typography>
                     </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            p: 1,
-                            m: 1,
-                        }}
-                    >
-                        <Box sx={{ width: '50%' }}>
-                            <form onSubmit={handleAppoinmentBooking}>
 
-                                <TextField
-                                    label="Your Name"
-                                    id="outlined-size-small"
-                                    name="customerName"
-                                    required
-                                    onBlur={handleOnBlur}
-                                    // defaultValue={`name`}
-                                    size="small"
-                                    sx={{ width: '100%', my: 2 }}
-                                />
-                                <TextField
-                                    label="Your Email"
-                                    id="outlined-size-small"
-                                    name="email"
-                                    onBlur={handleOnBlur}
-                                    defaultValue={user?.email}
-                                    disabled
-                                    size="small"
-                                    sx={{ width: '100%', my: 2 }}
-                                />
-                                <TextField
-                                    label="Your Phone Number"
-                                    id="outlined-size-small"
-                                    name="phone"
-                                    required
-                                    onBlur={handleOnBlur}
-                                    size="small"
-                                    sx={{ width: '100%', my: 2 }}
-                                />
-                                <TextField
-                                    label="Appoinment Time"
-                                    id="outlined-size-small"
-                                    name='bookingTime'
-                                    size="small"
-                                    onBlur={handleOnBlur}
-                                    required
-                                    sx={{ width: '100%', my: 2 }}
-                                />
-                                <Button type='submit' variant="contained">Proceed Booking</Button>
-                            </form>
-                        </Box>
-                        <Box>
-                            <div>
-                                <Calender date={date} />
-                            </div>
-
-                        </Box>
-                    </Box>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={6}>
+                            <Box sx={{ width: '75%' }}>
+                                <form onSubmit={handleAppoinmentBooking} className='booking-form'>
+                                    <TextField
+                                        label="Your Name"
+                                        id="outlined-size-small"
+                                        name="customerName"
+                                        required
+                                        onBlur={handleOnBlur}
+                                        // defaultValue={`name`}
+                                        size="small"
+                                        sx={{ width: '100%', my: 2 }}
+                                    />
+                                    <TextField
+                                        label="Your Email"
+                                        id="outlined-size-small"
+                                        name="email"
+                                        onBlur={handleOnBlur}
+                                        defaultValue={user?.email}
+                                        disabled
+                                        size="small"
+                                        sx={{ width: '100%', my: 2 }}
+                                    />
+                                    <TextField
+                                        label="Your Phone Number"
+                                        id="outlined-size-small"
+                                        name="phone"
+                                        required
+                                        onBlur={handleOnBlur}
+                                        size="small"
+                                        sx={{ width: '100%', my: 2 }}
+                                    />
+                                    <TextField
+                                        label="Appoinment Time"
+                                        id="outlined-size-small"
+                                        name='bookingTime'
+                                        size="small"
+                                        onBlur={handleOnBlur}
+                                        required
+                                        sx={{ width: '100%', my: 2 }}
+                                    />
+                                    <Button type='submit' variant="contained">Proceed Booking</Button>
+                                </form>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Box>
+                                <div>
+                                    <Calender date={date} />
+                                </div>
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </div>
 
             </Container >

@@ -13,9 +13,6 @@ const MyAppoinment = () => {
             .then((res) => res.json())
             .then((data) => setMyAppoinments(data));
     }, [user.email]);
-    console.log(myAppoinments)
-    console.log(user)
-
     const handleDeleteAppoinment = id => {
         console.log(id)
         const proceed = window.confirm("Are You Sure Want to Delete Your Appoinment ?")

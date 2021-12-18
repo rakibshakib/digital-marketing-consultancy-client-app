@@ -1,8 +1,8 @@
-import { Button, Container, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import { addUser, setError } from '../../features/Slice/slice';
 import { auth, googleProvider } from '../../Firebase/Firebase.config';
@@ -77,10 +77,16 @@ const Login = () => {
                     <Button type='submit' variant="contained">Login</Button>
                 </form>
                 <br />
-                <Button onClick={() => dispatch(handleLogIn)} variant="contained">Login With Google</Button>
-                <Typography variant="h6" component="div" sx={{ textAlign: 'center', color: "black" }}>
-                    New User ? <Link to='/register'>Register Here</Link>
-                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", mb: 4,  flexDirection: 'column' }}>
+                    <Button onClick={() => dispatch(handleLogIn)} variant="contained">Login With Google</Button>
+                    <NavLink
+                        style={{ textDecoration: 'none' }}
+                        to="/register">
+                        <Button variant="text">New User? Please Register</Button>
+                    </NavLink>
+                </Box>
+
+
             </Container>
         </div>
     )

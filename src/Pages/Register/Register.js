@@ -1,26 +1,17 @@
 import { Alert, Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material';
-import { yellow } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
-import { addUser, setError } from '../../features/Slice/slice';
+import { addUser, setError, updateIsLoading } from '../../features/Slice/slice';
 import { auth } from '../../Firebase/Firebase.config';
-
-const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(yellow[500]),
-    backgroundColor: yellow[700],
-    '&:hover': {
-        backgroundColor: yellow[700],
-    },
-}));
 
 const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const { user, isLoading, error } = useSelector((state) => state.services);
+    console.log("from register page", isLoading);
     const [loginData, setLoginData] = useState({});
     const handleOnBlur = e => {
         const field = e.target.name;
@@ -29,7 +20,6 @@ const Register = () => {
         newLoginData[field] = value;
         setLoginData(newLoginData);
     }
-
 
     const handleLoginSubmit = e => {
         e.preventDefault()
@@ -41,7 +31,10 @@ const Register = () => {
         console.log(loginData);
 
         createUserWithEmailAndPassword(auth, loginData.email, loginData.password).then((result) => {
-            console.log(result)
+            dispatch(updateIsLoading({
+                isLoading: true
+            }))
+            // console.log(result)
             updateProfile(auth.currentUser, {
                 displayName: loginData.displayName
             }).then(() => {
@@ -73,7 +66,7 @@ const Register = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 5 }}>
                     <Box sx={{ width: '100%' }}>
                         <Typography sx={{ color: "white", pt: 5, fontSize: 25 }} variant="body1" gutterBottom>Register</Typography>
-                        {!isLoading && <form onSubmit={handleLoginSubmit} className='bg-white py-5 px-2 rounded-2xl my-5'>
+                        {!isLoading && <form onSubmit={handleLoginSubmit} className='form-container'>
                             <TextField
                                 sx={{ width: '75%', m: 1 }}
                                 required
@@ -107,7 +100,7 @@ const Register = () => {
                                 onBlur={handleOnBlur}
                                 variant="standard" />
 
-                            <ColorButton sx={{ width: '50%', m: 1 }} type="submit" variant="contained">Register</ColorButton>
+                            <Button sx={{ width: '50%', m: 1 }} type="submit" variant="contained">Register</Button>
                             <br />
                             <NavLink
                                 style={{ textDecoration: 'none' }}
