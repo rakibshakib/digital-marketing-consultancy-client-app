@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
-import { googleLoginUser, loginUser, setError } from '../../features/Slice/slice';
+import { addUser, setError } from '../../features/Slice/slice';
 import { auth, googleProvider } from '../../Firebase/Firebase.config';
 import './Login.css';
 
@@ -22,34 +22,34 @@ const Login = () => {
 
     const handleLogIn = () => {
         signInWithPopup(auth, googleProvider).then((result) => {
-            dispatch(googleLoginUser({
-                user: result.user,
+            dispatch(addUser({
+                user: result.user
             }))
-            if(result.user){
+            if (result.user) {
                 navigate(`/home`)
             }
 
         }).catch((err) => {
             dispatch(setError({
                 error: err.message
-            })) 
+            }))
         });
-    } 
+    }
     const handleUserLogin = e => {
         e.preventDefault()
         signInWithEmailAndPassword(auth, loginData.email, loginData.password).then((result) => {
-            dispatch(loginUser({
+            dispatch(addUser({
                 user: result.user,
             }))
-            if(result.user){
+            if (result.user) {
                 navigate(`/home`)
             }
         })
-        .catch((err) => {
-            dispatch(setError({
-                error: err.message
-            })) 
-        })
+            .catch((err) => {
+                dispatch(setError({
+                    error: err.message
+                }))
+            })
     }
     return (
         <div className='loginComponents'>
@@ -78,8 +78,8 @@ const Login = () => {
                 </form>
                 <br />
                 <Button onClick={() => dispatch(handleLogIn)} variant="contained">Login With Google</Button>
-                <Typography variant="h6" component="div" sx={{ textAlign: 'center', color: "black" }}>  
-                New User ? <Link to='/register'>Register Here</Link>
+                <Typography variant="h6" component="div" sx={{ textAlign: 'center', color: "black" }}>
+                    New User ? <Link to='/register'>Register Here</Link>
                 </Typography>
             </Container>
         </div>

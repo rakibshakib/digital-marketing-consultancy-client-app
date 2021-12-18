@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const fetchServices = createAsyncThunk(
     'consultancy/fetchServices',
     async () => {
-        const response = await fetch('http://localhost:5000/all-service').then(res => res.json())
+        const response = await fetch('https://whispering-hamlet-97781.herokuapp.com/all-service').then(res => res.json())
         return response
     }
 )
@@ -14,6 +14,7 @@ export const appoinment = createSlice({
     initialState: {
         service: [],
         user: { },
+        isAdmin: false, 
         date: new Date(),
         status: '',
         isLoading: false,
@@ -23,21 +24,22 @@ export const appoinment = createSlice({
         datePicker: (state, { payload }) => {
             state.date = payload
         },
-        googleLoginUser: (state, { payload }) => {
+        addUser: (state, { payload }) => {
+            console.log(payload)
             state.user = payload.user
-            // console.log(state.user)
         },
         logoutUser: state => {
             state.user = {} 
         },
-        createUser: (state, { payload }) => {
-            state.user = payload.user
-            // console.log(state.user)
-        },
-        loginUser: (state, { payload }) => {
-            state.user = payload.user
-            // console.log(state.user)
-        },
+
+        // createUser: (state, { payload }) => {
+        //     state.user = payload.user
+        //     // console.log(state.user)
+        // },
+        // loginUser: (state, { payload }) => {
+        //     state.user = payload.user
+        //     // console.log(state.user)
+        // },
         updateUserState: (state, { payload }) => {
             console.log(payload)
             state.user = payload
@@ -56,6 +58,6 @@ export const appoinment = createSlice({
         })
     },
 })
-export const { datePicker, googleLoginUser, logoutUser, updateUserState, createUser, setError, loginUser } = appoinment.actions;
+export const { datePicker, logoutUser , setError, addUser, updateUserState } = appoinment.actions;
 
 export default appoinment.reducer;

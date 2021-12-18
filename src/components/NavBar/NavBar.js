@@ -15,9 +15,12 @@ const NavBar = () => {
     const { user } = useSelector((state) => state.services);
     const dispatch = useDispatch();
 
+
     const handleLogOut = () => {
         signOut(auth).then(() => {
             dispatch(logoutUser())
+           
+           
         }).catch((error) => {
             alert("error", error.message)
         });
@@ -63,7 +66,7 @@ const NavBar = () => {
                                 to='/myAppoinment'> <Button color="inherit">My Appoinment</Button> </Link>
                             <Link
                                 style={{ textDecoration: 'none', color: 'white', fontWeight: '800', fontSize: '20px' }}
-                                to='/dashboard'> <Button color="inherit">Dashboard</Button> </Link>
+                                to='/dashboard/by-date'> <Button color="inherit">Dashboard</Button> </Link>
                         </Toolbar>
                     </Container>
 

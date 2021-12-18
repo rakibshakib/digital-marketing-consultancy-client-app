@@ -14,7 +14,7 @@ const Booking = () => {
     const paramsId = useParams()
 
     useEffect(() => {
-        const url = `http://localhost:5000/all-service/${paramsId.id}`
+        const url = `https://whispering-hamlet-97781.herokuapp.com/all-service/${paramsId.id}`
         fetch(url).then(res => res.json()).then(data => setCurrentService(data))
     }, [paramsId.id])
 
@@ -35,7 +35,7 @@ const Booking = () => {
             email: user?.email
         }
         console.log(appoinementData)
-        fetch("http://localhost:5000/appoinment-data", {
+        fetch("https://whispering-hamlet-97781.herokuapp.com/appoinment-data", {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

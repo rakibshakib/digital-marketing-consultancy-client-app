@@ -1,14 +1,8 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import MenuIcon from '@mui/icons-material/Menu';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import RateReviewIcon from '@mui/icons-material/RateReview';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Grid } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,99 +14,56 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { signOut } from 'firebase/auth';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import AppoinmnetDataTable from '../../components/ApoinmentDataTable/ApoinmentDataTable';
-import Calender from '../../components/Calender/Calender';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../features/Slice/slice';
+import { auth } from '../../Firebase/Firebase.config';
+
 
 const drawerWidth = 250;
 
 function Dashboard(props) {
-    const { date } = useSelector((state) => state.services);
-    const [ dateAppoinmnet, setDateAppoinment ] = useState([])
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const logoutHandler = () => {
-
+        signOut(auth).then(() => {
+            dispatch(logoutUser())
+            navigate(`/home`)
+        }).catch((error) => {
+            alert("error", error.message)
+        });
     }
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    useEffect(() => {
-        const url = `http://localhost:5000/appoinments-for-admin?date=${date.toLocaleDateString()}`;
-        fetch(url).then((res) => res.json()).then((data) => setDateAppoinment(data));
-    }, [date]);
 
     const drawer = (
         <div>
             <Toolbar />
-            <Divider />
-            {
-                <List > <Link to={`/dashboard`}>
-                    <ListItem sx={{ fontWeight: 600 }} button>
-                        <ListItemIcon>
-                            <AddShoppingCartIcon />
-                        </ListItemIcon>
-                        My Order
-                    </ListItem>
-                </Link>
-
-                    <Link to={`/dashboard`}>
-                        <ListItem sx={{ fontWeight: 600 }} button>
-                            <ListItemIcon>
-                                <RateReviewIcon />
-                            </ListItemIcon>
-                            Review
-                        </ListItem>
-                    </Link>
-                    <Link to={`/dashboard`}>
-                        <ListItem sx={{ fontWeight: 600 }} button>
-                            <ListItemIcon>
-                                <MonetizationOnIcon />
-                            </ListItemIcon>
-                            Pay
-                        </ListItem>
-                    </Link>
-                </List>
-            }
-            <Divider />
             {
                 <List>
-                    <Link to={`/dashboard`}>
-                        <ListItem sx={{ fontWeight: 600 }} button>
-                            <ListItemIcon>
-                                <ManageAccountsIcon />
-                            </ListItemIcon>
-                            Manage All Orders
-                        </ListItem>
-                    </Link>
-                    <Link to={`/dashboard`}>
+                    <Link to={`/dashboard/by-date`}>
                         <ListItem sx={{ fontWeight: 600 }} button>
                             <ListItemIcon>
                                 <AddAPhotoIcon />
                             </ListItemIcon>
-                            Add Camera
+                            See Apoinment By Date
                         </ListItem>
                     </Link>
-                    <Link to={`/dashboard`}>
+                    <Link to={`/dashboard/all-appoinments`}>
                         <ListItem sx={{ fontWeight: 600 }} button>
                             <ListItemIcon>
-                                <AdminPanelSettingsIcon />
+                                <ManageAccountsIcon />
                             </ListItemIcon>
-                            Add Admin
-                        </ListItem>
-                    </Link>
-
-                    <Link to={`/dashboard`}>
-                        <ListItem sx={{ fontWeight: 600 }} button>
-                            <ListItemIcon>
-                                <ShoppingCartIcon />
-                            </ListItemIcon>
-                            Manage Products
+                            All Appoinments
                         </ListItem>
                     </Link>
                 </List>
@@ -193,16 +144,7 @@ function Dashboard(props) {
             >
                 <Toolbar />
                 {/* this is content area */}
-                <Box >
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} md={4}>
-                            <Calender date={date} />
-                        </Grid>
-                        <Grid item xs={12} md={8}>
-                            <AppoinmnetDataTable dateAppoinmnet={dateAppoinmnet} />
-                        </Grid>
-                    </Grid>
-                </Box>
+                <Outlet />
             </Box>
         </Box>
     );

@@ -1,12 +1,12 @@
 import { Alert, Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material';
 import { yellow } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
-import { createUser, setError } from '../../features/Slice/slice';
+import { addUser, setError } from '../../features/Slice/slice';
 import { auth } from '../../Firebase/Firebase.config';
 
 const ColorButton = styled(Button)(({ theme }) => ({
@@ -33,34 +33,43 @@ const Register = () => {
 
     const handleLoginSubmit = e => {
         e.preventDefault()
-        
+
         if (loginData.password !== loginData.password2) {
             alert('Your password did not match');
             return
         }
         console.log(loginData);
- 
+
         createUserWithEmailAndPassword(auth, loginData.email, loginData.password).then((result) => {
             console.log(result)
-            dispatch(createUser({
-                user: result.user,
-            }))
-            if(result.user){
+            updateProfile(auth.currentUser, {
+                displayName: loginData.displayName
+            }).then(() => {
+                dispatch(addUser({
+                    user: result.user,
+                }))
+            }).catch((err) => {
+                dispatch(setError({
+                    error: err.message
+                }))
+            });
+
+            if (result.user) {
                 navigate(`/home`)
             }
-          })
-          .catch((err) => {     
-            dispatch(setError({
-                error: err.message
-            })) 
-            // ..
-          });
+        })
+        .catch((err) => {
+                dispatch(setError({
+                    error: err.message
+                }))
+                // ..
+        });
         e.preventDefault();
     }
     return (
         <div>
             <NavBar />
-             <Container>
+            <Container>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 5 }}>
                     <Box sx={{ width: '100%' }}>
                         <Typography sx={{ color: "white", pt: 5, fontSize: 25 }} variant="body1" gutterBottom>Register</Typography>
@@ -99,7 +108,7 @@ const Register = () => {
                                 variant="standard" />
 
                             <ColorButton sx={{ width: '50%', m: 1 }} type="submit" variant="contained">Register</ColorButton>
-                         <br />
+                            <br />
                             <NavLink
                                 style={{ textDecoration: 'none' }}
                                 to="/login">

@@ -8,7 +8,7 @@ const MyAppoinment = () => {
     const [myAppoinments, setMyAppoinments] = useState([])
     const { user } = useSelector((state) => state.services);
     useEffect(() => {
-        const url = `http://localhost:5000/appoinment-data?email=${user?.email}`;
+        const url = `https://whispering-hamlet-97781.herokuapp.com/appoinment-data?email=${user?.email}`;
         fetch(url)
             .then((res) => res.json())
             .then((data) => setMyAppoinments(data));
@@ -20,7 +20,7 @@ const MyAppoinment = () => {
         console.log(id)
         const proceed = window.confirm("Are You Sure Want to Delete Your Appoinment ?")
         if (proceed) {
-            const url = `http://localhost:5000/appoinment/${id}`
+            const url = `https://whispering-hamlet-97781.herokuapp.com/appoinment/${id}`
             fetch(url, {
                 method: "DELETE"
             }).then(res => res.json())
