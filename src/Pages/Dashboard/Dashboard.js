@@ -97,7 +97,7 @@ function Dashboard(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="p" noWrap component="button" sx={{ ml: 2, fontWeight: 500, color: 'black',  fontSize: 20, textDecoration: 'none' }}>
-                        <Link to='/'>Home</Link>
+                        <Link className="custom-link" to='/'>Home</Link>
                     </Typography>
                     <Typography variant="p" noWrap component="button" sx={{ ml: 3, fontWeight: 500, color: 'black', fontSize: 20 }} onClick={logoutHandler}>
                         Logout
